@@ -1,7 +1,6 @@
 import { Injectable, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { Prisma, PrismaClient } from "@prisma/client";
 
-import { UserListener } from "modules/user/user.listener";
 import { PRISMA_CLIENT_OPTIONS } from "services/prisma/prisma.config";
 import { Logger } from "services/logger/logger.service";
 import { PrismaListener } from "services/prisma/prisma.listener";
@@ -19,7 +18,6 @@ export class PrismaService extends PrismaClient<Prisma.PrismaClientOptions, "err
       this.logger.error(e.message);
     });
 
-    this.$use(UserListener.onCreated);
     this.$use(PrismaListener.onDeleted);
     this.$use(PrismaListener.onFind);
   }
