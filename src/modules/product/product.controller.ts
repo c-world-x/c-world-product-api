@@ -1,27 +1,23 @@
-﻿import { Controller, Get, Query } from "@nestjs/common";
+﻿import { Controller } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
+import { MessagePattern, Payload } from "@nestjs/microservices";
 
-import { CountRequestDTO, ListRequestDTO } from "modules/product/product.dto";
 import { ProductService } from "modules/product/product.service";
+import { CreateProductDto } from "modules/product/dto";
 
 @ApiTags("Products")
 @Controller("products")
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Get("/")
-  async getList(@Query() query: ListRequestDTO) {
-    const products = await this.productService.getList(query);
-    return { data: products };
+  @MessagePattern({ cmd: "get-products" })
+  getProducts() {
+    return [1, 2, 3];
   }
 
-  @Get("/count")
-  async count(@Query() query: CountRequestDTO) {
-    return this.productService.count(query);
-  }
-
-  @Get("/:id")
-  async getOne() {
-    return "product";
+  @MessagePattern({ cmd: "create-product" })
+  createProduct(@Payload() data: CreateProductDto) {
+    console.log("data", data);
+    return true;
   }
 }

@@ -3,7 +3,7 @@ import { API_PREFIX } from "shared/constants/global.constants";
 export const GLOBAL_CONFIG = {
   env: process.env.ENV,
   nest: {
-    port: 3000,
+    port: 3001,
   },
   cors: {
     enabled: true,
